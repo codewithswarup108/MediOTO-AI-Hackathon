@@ -19,7 +19,7 @@ let tourSeenThisPage = false;
 
 const statusLabel = { within: 'Within range', below: 'Below range', above: 'Above range', invalid: 'Needs attention', unsupported: 'Unsupported' };
 function showToast(message) { const el = $('#toast'); if (!el) return; el.textContent = message; el.classList.add('visible'); clearTimeout(toastTimer); toastTimer = setTimeout(() => el.classList.remove('visible'), 2800); }
-function setView(view) { activeView = view; window.history.pushState({ view }, '', view === 'demo' ? '/demo' : '/'); render(); if (view === 'demo') maybeStartTour(); }
+function setView(view) { activeView = view; window.history.pushState({ view }, '', view === 'demo' ? '/demo' : '/'); window.scrollTo(0, 0); render(); if (view === 'demo') maybeStartTour(); }
 window.addEventListener('popstate', () => { activeView = location.pathname === '/demo' ? 'demo' : 'home'; render(); });
 
 function header() { return `<header class="topbar"><a class="brand" href="/" data-view="home"><span class="brand-mark">O</span><span>MediOTO<span class="brand-ai">AI</span></span></a><nav><button class="nav-link ${activeView === 'home' ? 'active' : ''}" data-view="home">Overview</button><button class="nav-link ${activeView === 'demo' ? 'active' : ''}" data-view="demo">Analyze report</button><a class="nav-link" href="#how-it-works" data-scroll="how-it-works">How it works</a></nav><div class="top-actions">${activeView === 'demo' ? '<button class="tour-launch" data-action="start-tour">? Guided tour</button>' : ''}<span class="demo-pill"><i></i> Demo environment</span><button class="avatar" aria-label="Alshi Coders team">A</button></div><button class="menu-toggle" aria-label="Open navigation">☰</button></header>`; }
